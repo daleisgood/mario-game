@@ -65,7 +65,7 @@ function startGame() {
 
   // Game Logic
   let isJumping = true;
-
+  //sample kasi firstime magrepo sa github haha
   loadRoot("https://i.imgur.com/");
   loadSprite("coin", "wbKxhcd.png");
   loadSprite("evil-shroom", "KPO3ffR9.png");
