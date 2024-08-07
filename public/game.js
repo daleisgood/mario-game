@@ -12,6 +12,18 @@ client
 const account = new Account(client);
 const database = new Databases(client);
 
+async function isLoggedIn() {
+  return account
+    .get()
+    .then((response) => {
+      if (response) {
+        return true;
+      }
+      return false;
+    })
+    .catch((err) => console.error(error));
+}
+
 function register(event) {
   account
     .create(
@@ -44,6 +56,30 @@ function login(event) {}
 function showDisplay() {
   const modalElement = document.getElementById("modal");
   modalElement.classList.add("hidden");
+  isLoggedIn()
+    .then((isLogin) => {
+      if (isLogin) {
+        const modalElement = document.getElementById("modal");
+        modalElement.classList.add("hidden");
+        const logoutButton = document.getElementById("logout-button");
+        logoutButton.classList.remove("hidden");
+        const highScoreTag = document.getElementById("highscore-tag");
+        highScoreTag.classList.remove("hidden");
+        startGame();
+      } else {
+        const modalElement = document.getElementById("modal");
+        modalElement.classList.remove("hidden");
+        const logoutButton = document.getElementById("logout-button");
+        logoutButton.classList.add("hidden");
+        const highScoreTag = document.getElementById("highscore-tag");
+        highScoreTag.classList.add("hidden");
+        const usernameElement = document.getElementById("username");
+        usernameElement.textContent = "";
+        const canvas = document.querySelector("canvas");
+        if (canvas) canvas.remove();
+      }
+    })
+    .catch((error) => console.error(error));
 }
 
 showDisplay();
@@ -141,14 +177,14 @@ function startGame() {
 
     const scoreLabel = add([
       text(score),
-      pos(30, 6),
+      pos(30, 46),
       layer("ui"),
       {
         value: score,
       },
     ]);
 
-    add([text(" level " + parseInt(level + 1)), pos(40, 6)]);
+    add([text(" level " + parseInt(level + 1)), pos(40, 46)]);
 
     const player = add([
       sprite("mario", solid()),

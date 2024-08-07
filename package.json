@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "appwrite": "^15.0.0",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "kaboom": "^3000.1.17"
   },
   "name": "mario-game",
   "version": "1.0.0",
